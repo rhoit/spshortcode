@@ -6,6 +6,7 @@ class subjectsplus_info {
 	private $sp_staff; 
 	private $sp_query;
 
+
 	public function set_sp_key($sp_key) {
 		$this->sp_key = $sp_key;
 	}
@@ -48,11 +49,11 @@ class subjectsplus_info {
 		return $this->sp_query;
 	}
 
-	public function do_sp_staff_query() {
+	public function do_sp_staff_query($sp_display) {
 
 		$query = $this->sp_url . $this->sp_query . $this->sp_key;
 
-	
+		
 
 		$response = wp_remote_get( $query );
 			if( is_wp_error( $response ) ) {
@@ -63,6 +64,7 @@ class subjectsplus_info {
 
 			   $staff_info = json_decode($response[body], true);
 
+			   if($sp_display == 'plain') {
 			   foreach ($staff_info['staff-member'] as $staff) {
 
 			   		echo $staff['fname'];
@@ -80,6 +82,40 @@ class subjectsplus_info {
 
 			   }
 
+			}
+
+
+			if($sp_display == 'table') {
+				echo '<table width="98%" class="item_listing" cellspacing="0" cellpadding="3">
+<tbody><tr><th>Name</th><th>Title</th><th>Phone</th><th>Email</th></tr>';
+
+			  foreach ($staff_info['staff-member'] as $staff) {
+			  		echo "<tr>";
+			  		echo "<td>";
+			   		echo $staff['fname'];
+			   		echo ' ';
+			   		echo $staff['lname'];
+			   		echo '</td>';
+			   		echo '<td>';
+			   		echo $staff['title'];
+			   		echo '</td>';
+
+			   		echo '<td>';
+			   		echo $staff['tel'];
+
+			   		echo '</td>';
+
+			   		echo '<td>';
+			   		echo $staff['email'];
+			   		echo '</td>';
+			   		echo "</tr>";
+
+
+			   }
+			   echo '</tbody></table>';
+
+
+			}
 
 			}
 		
@@ -91,8 +127,6 @@ class subjectsplus_info {
 
 		$query = $this->sp_url . $this->sp_query . $this->sp_key;
 
-	
-
 		$response = wp_remote_get( $query );
 			if( is_wp_error( $response ) ) {
    				$error_message = $response->get_error_message();
@@ -101,6 +135,42 @@ class subjectsplus_info {
 
 
 			   $database_info = json_decode($response[body], true);
+
+
+			   foreach ($database_info['database'] as $database) {
+			   		echo "<a href='{$database["location"]}'/>";
+			   		echo $database['title'];
+			   		echo "</a>";
+			   		echo ' ';
+			   		echo $database['description'];
+			   		echo '<br/>';
+			   		echo $database['location'];
+			   		echo '<br/>';
+			   	
+			   }
+
+
+			}
+
+	}
+
+		public function do_sp_guide_query() {
+
+		$query = $this->sp_url . $this->sp_query . $this->sp_key;
+
+	
+		$response = wp_remote_get( $query );
+			if( is_wp_error( $response ) ) {
+   				$error_message = $response->get_error_message();
+   				echo "Something went wrong: $error_message";
+
+			} else {
+
+
+			   $database_info = json_decode($response[body], true);
+
+
+
 
 			   foreach ($database_info['database'] as $database) {
 			   		echo "<a href='{$database["location"]}'/>";
@@ -117,12 +187,75 @@ class subjectsplus_info {
 
 
 			}
-		
-		
+	
 
 	}
 
 	
+	public function setup_sp_query($atts) {
+		$sp_type = $atts['service'];
+		$sp_display = $atts['display'];
+
+		if ($sp_type != '') {
+
+			if($sp_type == 'staff') {
+
+				if (array_key_exists('email', $atts)) {
+					$this->sp_query = "$sp_type/email/$atts[email]/";
+					$query = $this->sp_url . $this->sp_query . $this->sp_key;
+				return $this->do_sp_staff_query($sp_display);
+				}
+
+
+				if (array_key_exists('department', $atts)) {
+					$this->sp_query = "$sp_type/department/$atts[department]/";
+					$query = $this->sp_url . $this->sp_query . $this->sp_key;
+				return $this->do_sp_staff_query($sp_display);
+				}
+
+			}
+
+			if($sp_type == 'database') {
+
+				if (array_key_exists('letter', $atts)) {
+					$this->sp_query = "$sp_type/letter/$atts[letter]/";
+					$query = $this->sp_url . $this->sp_query . $this->sp_key;
+
+				return $this->do_sp_database_query($sp_display);
+				}
+
+				if (array_key_exists('search', $atts)) {
+					$this->sp_query = "$sp_type/search/$atts[search]/";
+					$query = $this->sp_url . $this->sp_query . $this->sp_key;
+				return $this->do_sp_database_query($sp_display);
+				}
+
+				if (array_key_exists('subject_id', $atts)) {
+					$this->sp_query = "$sp_type/subject_id/$atts[subject_id]/";
+					$query = $this->sp_url . $this->sp_query . $this->sp_key;
+				return $this->do_sp_database_query($sp_display);
+				}
+
+				if (array_key_exists('type', $atts)) {
+					$this->sp_query = "$sp_type/type/$atts[type]/";
+					$query = $this->sp_url . $this->sp_query . $this->sp_key;
+				return $this->do_sp_database_query($sp_display);
+				}
+
+
+			}
+
+		}
+
+
+		
+
+			
+
+
+
+	}
+
 
 }
 
