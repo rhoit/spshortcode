@@ -2,9 +2,6 @@
 
 class subjectsplus_info {
 
-	public function __construct() {
-	}
-
 	private $sp_key;
 	private $sp_url;
 	private $sp_output_xml;
@@ -45,10 +42,12 @@ class subjectsplus_info {
 
 		$query = $this->sp_url . $this->sp_query . $this->sp_key;
 
+		// Send a get request to the SP API with the wordpress remote function 
+
 		$response = wp_remote_get( $query );
 			if( is_wp_error( $response ) ) {
    				$error_message = $response->get_error_message();
-   				echo "Something went wrong: $error_message";
+   				echo "Error: $error_message";
 			} else {
 
 
@@ -58,15 +57,10 @@ class subjectsplus_info {
 			   foreach ($staff_info['staff-member'] as $staff) {
 
 			   		echo $staff['fname'];
-			   		
 			   		echo $staff['lname'];
-			   		
 			   		echo $staff['title'];
-			   		
 			   		echo $staff['tel'];
-			   		
 			   		echo $staff['email'];
-			   		
 			   		echo $staff['bio'];
 			   		
 
@@ -115,7 +109,7 @@ class subjectsplus_info {
 
 			   foreach ($database_info['database'] as $database) {
 			   		echo a_link($database['location'], $database['title']);
-			   		echo br($database['description']);
+			   		echo p_print($database['description']);
 			   	
 			   		
 			   	
@@ -124,8 +118,6 @@ class subjectsplus_info {
 
 			}
 	}
-
-
 
 	public function do_sp_guide_query() {
 
@@ -145,9 +137,7 @@ class subjectsplus_info {
 
 			   foreach ($database_info['database'] as $database) {
 			   		echo a_link($database["location"], $database["link"]);
-			   		echo br_print($database['description']);
-			 
-			   		
+			   		echo p_print($database['description']);	
 			   	
 			   }
 
@@ -156,15 +146,13 @@ class subjectsplus_info {
 	
 	}
 
-
 	// This function determines what kind of query to make based on shortcode input.
 	public function setup_sp_query($atts) {
 		$sp_type = $atts['service'];
 		$sp_display = $atts['display'];
 
-		if ($sp_type != '') {
-
-			if($sp_type == 'staff') {
+		switch($sp_type) {
+			case 'staff':
 
 				if (array_key_exists('email', $atts)) {
 					$this->sp_query = "$sp_type/email/$atts[email]/";
@@ -178,10 +166,9 @@ class subjectsplus_info {
 					$query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_staff_query($sp_display);
 				}
+			break;
 
-			}
-
-			if($sp_type == 'database') {
+			case 'database':
 
 				if (array_key_exists('letter', $atts)) {
 					$this->sp_query = "$sp_type/letter/$atts[letter]/";
@@ -207,18 +194,32 @@ class subjectsplus_info {
 					$query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_database_query($sp_display);
 				}
-
-
-			}
+			break;
 
 		}
-
-
-		
-
 	}
 
 
 }
+
+
+function p_print($content) {
+
+	return "<p class='sp_content'>" . $content . "</p>";
+}
+
+function a_link($url, $link) {
+
+	return "<a href=$url>$link</a>" ;
+}
+
+
+function td($content) {
+
+	return "<td>$content</td>";
+}
+
+
+
 
 ?>

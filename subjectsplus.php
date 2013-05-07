@@ -11,7 +11,7 @@
 
 
 include('subjectsplusclass.php');
-include('htmlout.php');
+
 function get_sp( $atts ){
 
   extract( shortcode_atts( array(
