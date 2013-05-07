@@ -1,12 +1,17 @@
 <?php 
+
 class subjectsplus_info {
+
+	public function __construct() {
+	}
+
 	private $sp_key;
 	private $sp_url;
 	private $sp_output_xml;
 	private $sp_staff; 
 	private $sp_query;
 
-
+	// Getter and setter for the API key
 	public function set_sp_key($sp_key) {
 		$this->sp_key = $sp_key;
 	}
@@ -15,6 +20,7 @@ class subjectsplus_info {
 		return $this->sp_key;
 	}
 
+	// Getter and setter for the API base URL
 	public function set_sp_url($sp_url) {
 		$this->sp_url = $sp_url;
 	}
@@ -23,23 +29,7 @@ class subjectsplus_info {
 		return $this->sp_url;
 	}
 
-	public function set_sp_output_xml($sp_output_xml) {
-		$this->sp_output_xml = $sp_output_xml;
-	}
-
-	public function get_sp_output_xml() {
-		return $this->sp_output_xml;
-	}
-
-
-	public function set_sp_staff($sp_staff) {
-		$this->sp_staff = $sp_staff;
-	}
-
-
-	public function get_sp_staff() {
-		return $this->sp_staff;
-	}
+	// Getter and setter for the SP query
 
 	public function set_sp_query($sp_query) {
 		$this->sp_query = $sp_query;
@@ -49,11 +39,11 @@ class subjectsplus_info {
 		return $this->sp_query;
 	}
 
+	// Function to perform a staff query
+
 	public function do_sp_staff_query($sp_display) {
 
 		$query = $this->sp_url . $this->sp_query . $this->sp_key;
-
-		
 
 		$response = wp_remote_get( $query );
 			if( is_wp_error( $response ) ) {
@@ -68,17 +58,17 @@ class subjectsplus_info {
 			   foreach ($staff_info['staff-member'] as $staff) {
 
 			   		echo $staff['fname'];
-			   		echo ' ';
+			   		
 			   		echo $staff['lname'];
-			   		echo '<br/>';
+			   		
 			   		echo $staff['title'];
-			   		echo '<br/>';
+			   		
 			   		echo $staff['tel'];
-			   		echo '<br/>';
+			   		
 			   		echo $staff['email'];
-			   		echo '<br/>';
+			   		
 			   		echo $staff['bio'];
-			   		echo '<br/>';
+			   		
 
 			   }
 
@@ -87,30 +77,16 @@ class subjectsplus_info {
 
 			if($sp_display == 'table') {
 				echo '<table width="98%" class="item_listing" cellspacing="0" cellpadding="3">
-<tbody><tr><th>Name</th><th>Title</th><th>Phone</th><th>Email</th></tr>';
+				<tbody><tr><th>Name</th><th>Title</th><th>Phone</th><th>Email</th></tr>';
 
 			  foreach ($staff_info['staff-member'] as $staff) {
 			  		echo "<tr>";
-			  		echo "<td>";
-			   		echo $staff['fname'];
-			   		echo ' ';
-			   		echo $staff['lname'];
-			   		echo '</td>';
-			   		echo '<td>';
-			   		echo $staff['title'];
-			   		echo '</td>';
-
-			   		echo '<td>';
-			   		echo $staff['tel'];
-
-			   		echo '</td>';
-
-			   		echo '<td>';
-			   		echo $staff['email'];
-			   		echo '</td>';
+			   		echo td($staff['fname']);
+			   		echo td($staff['lname']);
+			   		echo td($staff['title']);
+			   		echo td($staff['tel']);
+			   		echo td($staff['email']);
 			   		echo "</tr>";
-
-
 			   }
 			   echo '</tbody></table>';
 
@@ -118,10 +94,10 @@ class subjectsplus_info {
 			}
 
 			}
-		
-		
 
 	}
+
+	// Function to perform a database service query 
 
 	public function do_sp_database_query() {
 
@@ -138,23 +114,20 @@ class subjectsplus_info {
 
 
 			   foreach ($database_info['database'] as $database) {
-			   		echo "<a href='{$database["location"]}'/>";
-			   		echo $database['title'];
-			   		echo "</a>";
-			   		echo ' ';
-			   		echo $database['description'];
-			   		echo '<br/>';
-			   		echo $database['location'];
-			   		echo '<br/>';
+			   		echo a_link($database['location'], $database['title']);
+			   		echo br($database['description']);
+			   	
+			   		
 			   	
 			   }
 
 
 			}
-
 	}
 
-		public function do_sp_guide_query() {
+
+
+	public function do_sp_guide_query() {
 
 		$query = $this->sp_url . $this->sp_query . $this->sp_key;
 
@@ -170,28 +143,21 @@ class subjectsplus_info {
 			   $database_info = json_decode($response[body], true);
 
 
-
-
 			   foreach ($database_info['database'] as $database) {
-			   		echo "<a href='{$database["location"]}'/>";
-
-			   		echo $database['title'];
-			   		echo "</a>";
-			   		echo ' ';
-			   		echo $database['description'];
-			   		echo '<br/>';
-			   		echo $database['location'];
-			   		echo '<br/>';
+			   		echo a_link($database["location"], $database["link"]);
+			   		echo br_print($database['description']);
+			 
+			   		
 			   	
 			   }
 
 
 			}
 	
-
 	}
 
-	
+
+	// This function determines what kind of query to make based on shortcode input.
 	public function setup_sp_query($atts) {
 		$sp_type = $atts['service'];
 		$sp_display = $atts['display'];
@@ -250,19 +216,9 @@ class subjectsplus_info {
 
 		
 
-			
-
-
-
 	}
 
 
 }
-
-
-
-
-
-
 
 ?>

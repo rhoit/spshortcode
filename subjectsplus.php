@@ -11,13 +11,13 @@
 
 
 include('subjectsplusclass.php');
-
+include('htmlout.php');
 function get_sp( $atts ){
 
   extract( shortcode_atts( array(
 				 // Misc attributes
 				 'service' => '',
-				 'display' => '',
+				 'display' => 'plain',
 
 				 //Staff attributes 
 
@@ -30,10 +30,9 @@ function get_sp( $atts ){
 				 'search' => '',
 				 'subject_id' => '',
 				 'type' => ''
-
-
-
 				 ), $atts ) );
+
+
 
   $subjectsplus = new subjectsplus_info();
   $subjectsplus->set_sp_url("http://subjectsplus.com/spum/api/");
