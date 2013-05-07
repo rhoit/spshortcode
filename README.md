@@ -23,14 +23,17 @@ To query the api, you need to choose a service. Currently, subjectsplus has 5 av
 
 	[sp service='staff']
 
-or 
+or
+
 	[sp service='database']
 
 Staff shortcodes
 -------------------------------------------
 This shortcode returns information about a single staff member and displays it without using a table:
+
 	[sp service='staff' email='someone@miami.edu' display='plain']
 This shortcode returns information about an entire department and displays it as a table:
+
 	[sp service='staff department='99' display='table']
 
 
