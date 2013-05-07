@@ -5,7 +5,6 @@
   Description: A demonstration of the subjectsplus api using Wordpress shortcodes
   Version: 0.1
   Author: James Little
-  Author URI: http://URI_Of_The_Plugin_Author
   License: 
 */
 
@@ -20,10 +19,10 @@ function get_sp( $atts ){
 				 'display' => 'plain',
 
 				 //Staff attributes 
-
 				 'email' => '',
 				 'department' => '', 
 				 'limit' => '99',
+				 
 				 //Database attributes
 				 'letter' => '',
 				 'limit' => '99',

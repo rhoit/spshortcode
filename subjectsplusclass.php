@@ -203,6 +203,11 @@ class subjectsplus_info {
 }
 
 
+
+
+
+// Some functions to make html easier to work with in the code 
+
 function p_print($content) {
 
 	return "<p class='sp_content'>" . $content . "</p>";
