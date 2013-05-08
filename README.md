@@ -36,7 +36,6 @@ This shortcode returns information about an entire department and displays it as
 
 	[sp service='staff department='99' display='table']
 
-
 Database shortcodes
 --------------------------------------------
 This shortcode searches for databases that contain philosophy in the title: 
@@ -46,4 +45,8 @@ This shortcode searches for databases that contain philosophy in the title:
 This shortcode returns all the databases that being with A:
 
 	[sp service='database' letter='A']
+
+The results can limited by using attributes:
+
+	[sp service='database' letter='A' max='5']
 

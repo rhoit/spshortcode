@@ -56,12 +56,11 @@ class subjectsplus_info {
 			   if($sp_display == 'plain') {
 			   foreach ($staff_info['staff-member'] as $staff) {
 
-			   		echo $staff['fname'];
-			   		echo $staff['lname'];
-			   		echo $staff['title'];
-			   		echo $staff['tel'];
-			   		echo $staff['email'];
-			   		echo $staff['bio'];
+			   		echo p_print($staff['fname'] . ' '  . $staff['lname']);
+			   		echo p_print($staff['title']);
+			   		echo p_print($staff['tel']);
+			   		echo p_print($staff['email']);
+			   	//	echo $staff['bio'];
 			   		
 
 			   }
@@ -71,7 +70,7 @@ class subjectsplus_info {
 
 			if($sp_display == 'table') {
 				echo '<table width="98%" class="item_listing" cellspacing="0" cellpadding="3">
-				<tbody><tr><th>Name</th><th>Title</th><th>Phone</th><th>Email</th></tr>';
+				<tbody><tr><th>First Name</th><th>Last Name</th><th>Title</th><th>Phone</th><th>Email</th><th>Bio</th></tr>';
 
 			  foreach ($staff_info['staff-member'] as $staff) {
 			  		echo "<tr>";
@@ -80,6 +79,7 @@ class subjectsplus_info {
 			   		echo td($staff['title']);
 			   		echo td($staff['tel']);
 			   		echo td($staff['email']);
+			   	//	echo td($staff['bio']);
 			   		echo "</tr>";
 			   }
 			   echo '</tbody></table>';
@@ -110,7 +110,7 @@ class subjectsplus_info {
 			   foreach ($database_info['database'] as $database) {
 			   		echo a_link($database['location'], $database['title']);
 			   		echo p_print($database['description']);
-			   	
+			   		
 			   		
 			   	
 			   }
@@ -148,21 +148,32 @@ class subjectsplus_info {
 
 	// This function determines what kind of query to make based on shortcode input.
 	public function setup_sp_query($atts) {
-		$sp_type = $atts['service'];
-		$sp_display = $atts['display'];
+		$sp_type = sanitize_string($atts['service']);
+		$sp_display = sanitize_string($atts['display']);
+
+
+		// Set a default max if max attribute isn't used
+		if ($atts[max] == 0) {
+			$atts[max] = '99';
+		}
 
 		switch($sp_type) {
 			case 'staff':
 
 				if (array_key_exists('email', $atts)) {
-					$this->sp_query = "$sp_type/email/$atts[email]/";
+					$sp_email = sanitize_string($atts['email']);
+					$sp_max = sanitize_string($atts['max']);
+
+					$this->sp_query = "$sp_type/email/$sp_email/max/$sp_max/";
 					$query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_staff_query($sp_display);
 				}
 
 
 				if (array_key_exists('department', $atts)) {
-					$this->sp_query = "$sp_type/department/$atts[department]/";
+					$sp_department = sanitize_string($atts['department']);
+
+					$this->sp_query = "$sp_type/department/$sp_department/max/$atts[max]/";
 					$query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_staff_query($sp_display);
 				}
@@ -171,26 +182,28 @@ class subjectsplus_info {
 			case 'database':
 
 				if (array_key_exists('letter', $atts)) {
-					$this->sp_query = "$sp_type/letter/$atts[letter]/";
+					$this->sp_query = "$sp_type/letter/$atts[letter]/max/$atts[max]/";
 					$query = $this->sp_url . $this->sp_query . $this->sp_key;
 
 				return $this->do_sp_database_query($sp_display);
 				}
 
 				if (array_key_exists('search', $atts)) {
-					$this->sp_query = "$sp_type/search/$atts[search]/";
+					$sp_search = sanitize_string($atts[search]);
+
+					$this->sp_query = "$sp_type/search/$sp_search/max/$atts[max]/";
 					$query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_database_query($sp_display);
 				}
 
 				if (array_key_exists('subject_id', $atts)) {
-					$this->sp_query = "$sp_type/subject_id/$atts[subject_id]/";
+					$this->sp_query = "$sp_type/subject_id/$atts[subject_id]/max/$atts[max]/";
 					$query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_database_query($sp_display);
 				}
 
 				if (array_key_exists('type', $atts)) {
-					$this->sp_query = "$sp_type/type/$atts[type]/";
+					$this->sp_query = "$sp_type/type/$atts[type]/max/$atts[max]/";
 					$query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_database_query($sp_display);
 				}
@@ -224,7 +237,9 @@ function td($content) {
 	return "<td>$content</td>";
 }
 
-
+function sanitize_string($string) {
+	return urlencode(filter_var($string, FILTER_SANITIZE_STRING));
+}
 
 
 ?>

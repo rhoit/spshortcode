@@ -17,12 +17,12 @@ function get_sp( $atts ){
 				 // Misc attributes
 				 'service' => '',
 				 'display' => 'plain',
-
+				 'max' => '',
 				 //Staff attributes 
 				 'email' => '',
 				 'department' => '', 
 				 'limit' => '99',
-				 
+
 				 //Database attributes
 				 'letter' => '',
 				 'limit' => '99',
