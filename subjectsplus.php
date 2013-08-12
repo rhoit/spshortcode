@@ -35,7 +35,7 @@ function get_sp( $atts ){
 
   $subjectsplus = new subjectsplus_info();
   $subjectsplus->set_sp_url("http://subjectsplus.com/spum/api/");
-  $subjectsplus->set_sp_key("key/tPEd9gxW8inwcBj4mNq7");
+  $subjectsplus->set_sp_key("");
   $subjectsplus->setup_sp_query($atts);
 
 }
