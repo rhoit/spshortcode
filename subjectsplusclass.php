@@ -130,14 +130,13 @@ class subjectsplus_info {
    				echo "Something went wrong: $error_message";
 
 			} else {
-
-
-			   $database_info = json_decode($response[body], true);
-
-
-			   foreach ($database_info['database'] as $database) {
-			   		echo a_link($database["location"], $database["link"]);
-			   		echo p_print($database['description']);	
+				  
+			  $guide_info = json_decode($response[body], true);
+				
+			   foreach ($guide_info['guide'] as $guide) {
+			   
+			     echo a_link($guide['url'],$guide['title']);
+      			   			     
 			   	
 			   }
 
@@ -206,6 +205,29 @@ class subjectsplus_info {
 					$this->sp_query = "$sp_type/type/$atts[type]/max/$atts[max]/";
 					$query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_database_query($sp_display);
+				}
+			break;
+
+			case 'guides':
+
+				if (array_key_exists('shortform', $atts)) {
+					$sp_search = sanitize_string($atts[search]);
+
+					$this->sp_query = "$sp_type/shortform/$sp_search/max/$atts[max]/";
+					$query = $this->sp_url . $this->sp_query . $this->sp_key;
+				return $this->do_sp_guide_query($sp_display);
+				}
+
+				if (array_key_exists('subject_id', $atts)) {
+					$this->sp_query = "$sp_type/subject_id/$atts[subject_id]/max/$atts[max]/";
+					$query = $this->sp_url . $this->sp_query . $this->sp_key;
+				return $this->do_sp_guide_query($sp_display);
+				}
+
+				if (array_key_exists('type', $atts)) {
+					$this->sp_query = "$sp_type/type/$atts[type]/max/$atts[max]/";
+					$query = $this->sp_url . $this->sp_query . $this->sp_key;
+				return $this->do_sp_guide_query($sp_display);
 				}
 			break;
 
