@@ -35,6 +35,18 @@ This shortcode returns information about a single staff member and displays it w
 This shortcode returns information about an entire department and displays it as a table:
 
 	[sp service='staff department='99' display='table']
+	
+	
+Guide shortcodes
+--------------------------------------------
+This short code returns information about subject guides by subject id:
+
+	[sp service="guides" subject_id="2"]
+
+Return by shortform:
+
+	[sp service="guides" short_form="nursing"]
+	
 
 Database shortcodes
 --------------------------------------------
