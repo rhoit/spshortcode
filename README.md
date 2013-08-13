@@ -19,7 +19,7 @@ Shortcode usage
 The shortcodes use a simple syntax. Each subjectsplus shortcode starts begins with sp:
 	[sp]
 
-To query the api, you need to choose a service. Currently, subjectsplus has 5 available services. This plugin currently allows you to get staff and database information. 
+To query the api, you need to choose a service. Currently, subjectsplus has 5 available services. This plugin currently allows you to get staff, guides, and database information. 
 
 	[sp service='staff']
 
