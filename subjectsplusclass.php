@@ -114,7 +114,9 @@ class subjectsplus_info {
         } else {
             $guide_info = json_decode($response[body], true);
             foreach ($guide_info['guide'] as $guide) {
+                echo "<p>";
                 echo a_link($guide['url'],$guide['title']);
+                echo "</p>";
             }
         }
 	}
