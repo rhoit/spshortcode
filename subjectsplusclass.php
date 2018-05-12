@@ -93,8 +93,12 @@ class subjectsplus_info {
         } else {
             $database_info = json_decode($response[body], true);
             foreach ($database_info['database'] as $database) {
-                echo a_link($database['location'], $database['title']);
+                echo '<h2>';
+                echo $database['title'];
+                echo '</h2>';
                 echo p_print($database['description']);
+                echo "For more details click the link";
+                echo "&nbsp;<a href='" . $database['location'] . "'>" . $database['location'] ."</a>";
             }
         }
 
