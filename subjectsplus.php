@@ -1,7 +1,7 @@
 <?php
   /*
     Plugin Name: Subjectsplus Shortcodes
-    Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
+    Plugin URI: https://github.com/rhoit/spshortcode
     Description: A demonstration of the subjectsplus api using Wordpress shortcodes
     Version: 0.1
     Author: James Little
