@@ -82,9 +82,9 @@ class subjectsplus_info {
 	}
 
 
-	// Function to perform a database service query
 	public function do_sp_database_query() {
-		$query = $this->sp_url . $this->sp_query . $this->sp_key;
+        // Function to perform a database service query
+		$query = $this->sp_url . $this->sp_query . 'key/' . $this->sp_key;
 
 		$response = wp_remote_get( $query );
         if( is_wp_error( $response ) ) {
