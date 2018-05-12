@@ -56,22 +56,25 @@ class subjectsplus_info {
 			   		echo p_print($staff['title']);
 			   		echo p_print($staff['tel']);
 			   		echo p_print($staff['email']);
-                    //	echo $staff['bio'];
                 }
 			}
 
 			if($sp_display == 'table') {
-				echo '<table width="98%" class="item_listing" cellspacing="0" cellpadding="3">
-				<tbody><tr><th>First Name</th><th>Last Name</th><th>Title</th><th>Phone</th><th>Email</th><th>Bio</th></tr>';
+				echo '<table width="98%" class="item_listing" cellspacing="0" cellpadding="0">';
+                echo '<thead><tr>';
+                echo '<th>Name</th>';
+
+                echo '<th>Title</th>';
+                echo '<th>Phone</th>';
+                echo '<th>Email</th>';
+                echo '</tr></thead><tbody>';
 
                 foreach ($staff_info['staff-member'] as $staff) {
 			  		echo "<tr>";
-			   		echo td($staff['fname']);
-			   		echo td($staff['lname']);
+			   		echo td($staff['fname'] . ' ' . $staff['lname']);
 			   		echo td($staff['title']);
 			   		echo td($staff['tel']);
 			   		echo td($staff['email']);
-                    //	echo td($staff['bio']);
 			   		echo "</tr>";
                 }
                 echo '</tbody></table>';
