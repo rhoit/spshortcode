@@ -114,10 +114,13 @@ class subjectsplus_info {
             echo "Something went wrong: $error_message";
         } else {
             $guide_info = json_decode($response[body], true);
+            $counter = 1;
             foreach ($guide_info['guide'] as $guide) {
                 echo "<p>";
-                echo a_link($guide['url'],$guide['title']);
+                $g_url = "/sp/subjects/databases.php?letter=bysub&subject_id=" . $counter;
+                echo a_link($g_url, $guide['title']);
                 echo "</p>";
+                $counter++;
             }
         }
 	}
