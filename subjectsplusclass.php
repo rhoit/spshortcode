@@ -63,7 +63,6 @@ class subjectsplus_info {
 				echo '<table width="98%" class="item_listing" cellspacing="0" cellpadding="0">';
                 echo '<thead><tr>';
                 echo '<th>Name</th>';
-
                 echo '<th>Title</th>';
                 echo '<th>Phone</th>';
                 echo '<th>Email</th>';
@@ -92,21 +91,13 @@ class subjectsplus_info {
             $error_message = $response->get_error_message();
             echo "Something went wrong: $error_message";
         } else {
-
-
             $database_info = json_decode($response[body], true);
-
-
             foreach ($database_info['database'] as $database) {
                 echo a_link($database['location'], $database['title']);
                 echo p_print($database['description']);
-
-
-
             }
-
-
         }
+
 	}
 
 	public function do_sp_guide_query() {
