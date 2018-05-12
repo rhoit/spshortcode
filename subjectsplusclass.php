@@ -101,7 +101,7 @@ class subjectsplus_info {
 	}
 
 	public function do_sp_guide_query() {
-		$query = $this->sp_url . $this->sp_query . $this->sp_key;
+		$query = $this->sp_url . $this->sp_query . 'key/' . $this->sp_key;
 
 		$response = wp_remote_get( $query );
         if( is_wp_error( $response ) ) {
