@@ -167,6 +167,10 @@ class subjectsplus_info {
                 $query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_staff_query($sp_display);
             }
+
+            $this->sp_query = "$sp_type/";
+            $query = $this->sp_url . $this->sp_query . $this->sp_key;
+            return $this->do_sp_staff_query($sp_display);
 			break;
 
         case 'database':
