@@ -82,7 +82,7 @@ class subjectsplus_info {
 	}
 
 
-	public function do_sp_database_query() {
+	public function do_sp_database_query($sp_display) {
         // Function to perform a database service query
 		$query = $this->sp_url . $this->sp_query . 'key/' . $this->sp_key;
 
@@ -90,18 +90,19 @@ class subjectsplus_info {
         if(is_wp_error($response)) {
             $error_message = $response->get_error_message();
             echo "Something went wrong: $error_message";
-        } else {
-            $database_info = json_decode($response[body], true);
-            foreach ($database_info['database'] as $database) {
-                echo '<h2>';
-                echo "<a href='" . $database['location'] . "'>" . $database['title'] ."</a>";
-                echo '</h2>';
-                echo p_print($database['description']);
-                echo "For more details click the link";
-                echo "&nbsp;<a href='" . $database['location'] . "'>" . $database['location'] ."</a>";
-            }
+            return;
         }
 
+        $database_info = json_decode($response[body], true);
+
+        foreach ($database_info['database'] as $database) {
+            echo '<h2>';
+            echo "<a href='" . $database['location'] . "'>" . $database['title'] ."</a>";
+            echo '</h2>';
+            echo p_print($database['description']);
+            echo "For more details click the link";
+            echo "&nbsp;<a href='" . $database['location'] . "'>" . $database['location'] ."</a>";
+        }
 	}
 
 	public function do_sp_guide_query() {
