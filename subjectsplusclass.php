@@ -87,7 +87,7 @@ class subjectsplus_info {
 		$query = $this->sp_url . $this->sp_query . 'key/' . $this->sp_key;
 
 		$response = wp_remote_get( $query );
-        if( is_wp_error( $response ) ) {
+        if(is_wp_error($response)) {
             $error_message = $response->get_error_message();
             echo "Something went wrong: $error_message";
         } else {
@@ -161,29 +161,26 @@ class subjectsplus_info {
 			break;
 
         case 'database':
-
-            if (array_key_exists('letter', $atts)) {
+            if(array_key_exists('letter', $atts)) {
                 $this->sp_query = "$sp_type/letter/$atts[letter]/max/$atts[max]/";
                 $query = $this->sp_url . $this->sp_query . $this->sp_key;
-
 				return $this->do_sp_database_query($sp_display);
             }
 
-            if (array_key_exists('search', $atts)) {
+            if(array_key_exists('search', $atts)) {
                 $sp_search = sanitize_string($atts[search]);
-
                 $this->sp_query = "$sp_type/search/$sp_search/max/$atts[max]/";
                 $query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_database_query($sp_display);
             }
 
-            if (array_key_exists('subject_id', $atts)) {
+            if(array_key_exists('subject_id', $atts)) {
                 $this->sp_query = "$sp_type/subject_id/$atts[subject_id]/max/$atts[max]/";
                 $query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_database_query($sp_display);
             }
 
-            if (array_key_exists('type', $atts)) {
+            if(array_key_exists('type', $atts)) {
                 $this->sp_query = "$sp_type/type/$atts[type]/max/$atts[max]/";
                 $query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_database_query($sp_display);
