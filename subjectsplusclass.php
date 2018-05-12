@@ -94,7 +94,7 @@ class subjectsplus_info {
             $database_info = json_decode($response[body], true);
             foreach ($database_info['database'] as $database) {
                 echo '<h2>';
-                echo $database['title'];
+                echo "<a href='" . $database['location'] . "'>" . $database['title'] ."</a>";
                 echo '</h2>';
                 echo p_print($database['description']);
                 echo "For more details click the link";
