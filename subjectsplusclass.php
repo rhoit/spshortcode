@@ -101,29 +101,18 @@ class subjectsplus_info {
 	}
 
 	public function do_sp_guide_query() {
-
 		$query = $this->sp_url . $this->sp_query . $this->sp_key;
-
 
 		$response = wp_remote_get( $query );
         if( is_wp_error( $response ) ) {
             $error_message = $response->get_error_message();
             echo "Something went wrong: $error_message";
-
         } else {
-
             $guide_info = json_decode($response[body], true);
-
             foreach ($guide_info['guide'] as $guide) {
-
                 echo a_link($guide['url'],$guide['title']);
-
-
             }
-
-
         }
-
 	}
 
 	// This function determines what kind of query to make based on shortcode input.
@@ -192,7 +181,6 @@ class subjectsplus_info {
 			break;
 
         case 'guides':
-
             if (array_key_exists('shortform', $atts)) {
                 $sp_search = sanitize_string($atts[search]);
 
@@ -220,23 +208,17 @@ class subjectsplus_info {
 
 
 
-
-
 // Some functions to make html easier to work with in the code
-
 function p_print($content) {
-
 	return "<p class='sp_content'>" . $content . "</p>";
 }
 
 function a_link($url, $link) {
-
 	return "<a href=$url>$link</a>" ;
 }
 
 
 function td($content) {
-
 	return "<td>$content</td>";
 }
 
