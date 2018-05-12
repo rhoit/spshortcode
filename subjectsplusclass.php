@@ -1,7 +1,6 @@
 <?php
 
 class subjectsplus_info {
-
 	private $sp_key;
 	private $sp_url;
 	private $sp_output_xml;
@@ -17,6 +16,7 @@ class subjectsplus_info {
 		return $this->sp_key;
 	}
 
+
 	// Getter and setter for the API base URL
 	public function set_sp_url($sp_url) {
 		$this->sp_url = $sp_url;
@@ -26,8 +26,8 @@ class subjectsplus_info {
 		return $this->sp_url;
 	}
 
-	// Getter and setter for the SP query
 
+	// Getter and setter for the SP query
 	public function set_sp_query($sp_query) {
 		$this->sp_query = $sp_query;
 	}
@@ -36,13 +36,13 @@ class subjectsplus_info {
 		return $this->sp_query;
 	}
 
-	// Function to perform a staff query
 
 	public function do_sp_staff_query($sp_display) {
+        // Function to perform a staff query
+
 		$query = $this->sp_url . $this->sp_query . 'key/' . $this->sp_key;
 
 		// Send a get request to the SP API with the wordpress remote function
-
 		$response = wp_remote_get( $query );
         if( is_wp_error( $response ) ) {
             $error_message = $response->get_error_message();
@@ -52,14 +52,12 @@ class subjectsplus_info {
 
             if($sp_display == 'plain') {
                 foreach ($staff_info['staff-member'] as $staff) {
-
 			   		echo p_print($staff['fname'] . ' '  . $staff['lname']);
 			   		echo p_print($staff['title']);
 			   		echo p_print($staff['tel']);
 			   		echo p_print($staff['email']);
                     //	echo $staff['bio'];
                 }
-
 			}
 
 			if($sp_display == 'table') {
@@ -77,18 +75,13 @@ class subjectsplus_info {
 			   		echo "</tr>";
                 }
                 echo '</tbody></table>';
-
-
 			}
-
         }
-
 	}
 
+
 	// Function to perform a database service query
-
 	public function do_sp_database_query() {
-
 		$query = $this->sp_url . $this->sp_query . $this->sp_key;
 
 		$response = wp_remote_get( $query );
