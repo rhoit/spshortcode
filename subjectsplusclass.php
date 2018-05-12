@@ -39,8 +39,7 @@ class subjectsplus_info {
 	// Function to perform a staff query
 
 	public function do_sp_staff_query($sp_display) {
-
-		$query = $this->sp_url . $this->sp_query . $this->sp_key;
+		$query = $this->sp_url . $this->sp_query . 'key/' . $this->sp_key;
 
 		// Send a get request to the SP API with the wordpress remote function
 
