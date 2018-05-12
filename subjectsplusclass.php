@@ -60,7 +60,7 @@ class subjectsplus_info {
 			}
 
 			if($sp_display == 'table') {
-				echo '<table width="98%" class="item_listing" cellspacing="0" cellpadding="0">';
+				echo '<table id="mytable" width="98%" class="item_listing" cellspacing="0" cellpadding="0">';
                 echo '<thead><tr>';
                 echo '<th>Name</th>';
                 echo '<th>Title</th>';
