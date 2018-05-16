@@ -94,7 +94,8 @@ class subjectsplus_info {
         }
 
         $database_info = json_decode($response[body], true);
-
+		
+        echo '<h4>A-Z List</h4>';
         foreach ($database_info['database'] as $database) {
             echo '<h2>';
             echo "<a href='" . $database['location'] . "'>" . $database['title'] ."</a>";
