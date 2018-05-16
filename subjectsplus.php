@@ -33,7 +33,7 @@ function get_sp($atts) {
             $atts));
 
     $subjectsplus = new subjectsplus_info();
-    $subjectsplus->set_sp_url("http://localhost/sp/api/");
+    $subjectsplus->set_sp_url("http://web:7070/api/");
     $subjectsplus->set_sp_key("18Oc4qyugxyykBwhDlCl");
     $subjectsplus->setup_sp_query($atts);
 }
