@@ -48,7 +48,7 @@ class subjectsplus_info {
             $error_message = $response->get_error_message();
             echo "Error: $error_message";
         } else {
-            $staff_info = json_decode($response[body], true);
+            $staff_info = json_decode($response['body'], true);
 
             if($sp_display == 'plain') {
                 foreach ($staff_info['staff-member'] as $staff) {
@@ -93,8 +93,8 @@ class subjectsplus_info {
             return;
         }
 
-        $database_info = json_decode($response[body], true);
-		
+        $database_info = json_decode($response['body'], true);
+
         echo '<h4>A-Z List</h4>';
         foreach ($database_info['database'] as $database) {
             echo '<h2>';
@@ -114,7 +114,7 @@ class subjectsplus_info {
             $error_message = $response->get_error_message();
             echo "Something went wrong: $error_message";
         } else {
-            $guide_info = json_decode($response[body], true);
+            $guide_info = json_decode($response['body'], true);
             $counter = 1;
             foreach ($guide_info['guide'] as $guide) {
                 echo "<p>";
@@ -133,8 +133,8 @@ class subjectsplus_info {
 
 
 		// Set a default max if max attribute isn't used
-		if ($atts[max] == 0) {
-			$atts[max] = '99';
+		if ($atts['max'] == 0) {
+			$atts['max'] = '99';
 		}
 
 		switch($sp_type) {
@@ -146,7 +146,6 @@ class subjectsplus_info {
                 $query = $this->sp_url . $this->sp_query . $this->sp_key;
 				return $this->do_sp_staff_query($sp_display);
             }
-
 
             if (array_key_exists('department', $atts)) {
                 $sp_department = sanitize_string($atts['department']);
